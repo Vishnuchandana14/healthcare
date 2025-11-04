@@ -28,8 +28,7 @@ public class Room {
 	@Pattern(regexp = "Available|Occupied", message="Status must be available or occupied")
 	public String status;
 	
-	@OneToOne
-	@JoinColumn(name = "patient_id")
+	@OneToOne(mappedBy = "room")
 	public Patient patient;
 
 	public Room() {

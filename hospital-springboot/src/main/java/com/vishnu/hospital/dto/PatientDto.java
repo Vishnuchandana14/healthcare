@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class PatientDto {
 	
-	public int id;
 	public String name;
 	public int age;
 	public String gender;
@@ -22,10 +21,9 @@ public class PatientDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PatientDto(int id, String name, int age, String gender, String address, String phoneNumber, String email,
+	public PatientDto(String name, int age, String gender, String address, String phoneNumber, String email,
 			String bloodGroup, String disease, LocalDate admissionDate, LocalDate dischargeDate, int roomId) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.age = age;
 		this.gender = gender;
@@ -37,10 +35,6 @@ public class PatientDto {
 		this.admissionDate = admissionDate;
 		this.dischargeDate = dischargeDate;
 		this.roomId = roomId;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String getName() {
@@ -83,9 +77,7 @@ public class PatientDto {
 		return dischargeDate;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 
 	public void setName(String name) {
 		this.name = name;

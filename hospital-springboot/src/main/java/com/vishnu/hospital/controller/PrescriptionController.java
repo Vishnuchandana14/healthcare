@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vishnu.hospital.dto.PrescriptionDto;
 import com.vishnu.hospital.service.PrescriptionService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
+@Tag(name = "9. Prescription")
 @RestController
 @RequestMapping("api/prescriptions")
 public class PrescriptionController {
@@ -25,30 +28,35 @@ public class PrescriptionController {
 	@Autowired
 	private PrescriptionService prescriptionService;
 	
+	@PreAuthorize("hasRole('DOCTOR')")
 	@PostMapping()
 	private ResponseEntity<PrescriptionDto> createPrescription(@Valid @RequestBody PrescriptionDto dto){
 		PrescriptionDto prescription = prescriptionService.createPrescription(dto);
 		return new ResponseEntity<>(prescription, HttpStatus.CREATED);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN','NURSE')")
 	@GetMapping("/{id}")
 	private ResponseEntity<PrescriptionDto> getPrescriptionById(@PathVariable int id){
 		PrescriptionDto prescription = prescriptionService.getPrescriptionById(id);
 		return new ResponseEntity<>(prescription, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN','NURSE')")
 	@GetMapping("/patient/{patientId}")
 	private ResponseEntity<List<PrescriptionDto>> getPrescriptionByPatientId(@PathVariable int patientId){
 		List<PrescriptionDto> prescription = prescriptionService.getPrescriptionByPatientId(patientId);
 		return new ResponseEntity<>(prescription, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN','NURSE')")
 	@GetMapping("/doctor/{doctorId}")
 	private ResponseEntity<List<PrescriptionDto>> getPrescriptionByDoctorId(@PathVariable int doctorId){
 		List<PrescriptionDto> prescription = prescriptionService.getPrescriptionByDoctorId(doctorId);
 		return new ResponseEntity<>(prescription, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN','NURSE')")
 	@DeleteMapping("/{id}")
 	private ResponseEntity<String> deletePrescription(@PathVariable int id){
 		String response = prescriptionService.deletePrescription(id);

@@ -11,9 +11,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import com.vishnu.hospital.enums.Role;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,6 +35,7 @@ public class User implements UserDetails{
 	@Column(nullable = false)
 	private String password;
 	
+	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	private Set<Role> roles;
 	
@@ -42,8 +45,6 @@ public class User implements UserDetails{
     @Column(name = "mobileNumber")
     private String mobileNumber;
     
-    @Column(name = "confirmPassword")
-    private String confirmPassword;
 
 	public User() {
 		super();
@@ -52,7 +53,7 @@ public class User implements UserDetails{
 
 	
 	public User(int id, String username, String password, Set<Role> roles, String email,
-			String mobileNumber, String confirmPassword) {
+			String mobileNumber) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -60,7 +61,6 @@ public class User implements UserDetails{
 		this.roles = roles;
 		this.email = email;
 		this.mobileNumber = mobileNumber;
-		this.confirmPassword = confirmPassword;
 	}
 
 	
@@ -75,10 +75,7 @@ public class User implements UserDetails{
 	}
 
 
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
+	
 
 	public void setEmail(String email) {
 		this.email = email;
@@ -87,11 +84,6 @@ public class User implements UserDetails{
 
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
-	}
-
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
 	}
 
 
@@ -133,6 +125,27 @@ public class User implements UserDetails{
 		return roles.stream()
 				    .map(role -> new SimpleGrantedAuthority(role.name()))
 				    .collect(Collectors.toList());
+	}
+	
+	
+	@Override
+	public boolean isAccountNonExpired() {
+	    return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+	    return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+	    return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+	    return true;
 	}
 
 

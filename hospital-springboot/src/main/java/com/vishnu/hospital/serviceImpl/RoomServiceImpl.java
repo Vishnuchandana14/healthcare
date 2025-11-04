@@ -9,9 +9,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.vishnu.hospital.dto.RoomDto;
+import com.vishnu.hospital.entity.Patient;
 import com.vishnu.hospital.entity.Room;
 import com.vishnu.hospital.exceptions.DuplicateResourceException;
 import com.vishnu.hospital.exceptions.RoomNotAvailableException;
+import com.vishnu.hospital.repository.PatientRepository;
 import com.vishnu.hospital.repository.RoomRepository;
 import com.vishnu.hospital.service.RoomService;
 
@@ -23,6 +25,9 @@ public class RoomServiceImpl implements RoomService{
 	
 	@Autowired
 	public ModelMapper modelMapper;
+	
+	@Autowired
+	public PatientRepository patientRepository;
 
 	@Override
 	public RoomDto createRoom(RoomDto dto) {
@@ -31,6 +36,16 @@ public class RoomServiceImpl implements RoomService{
 		if(room.getStatus() == null) {
 			room.setStatus("Available");
 		}
+		
+
+if (dto.getPatientId() != 0 && dto.getPatientId() > 0) {
+    Patient patient = patientRepository.findById(dto.getPatientId())
+        .orElseThrow(() -> new RuntimeException("Patient not found"));
+    room.setPatient(patient);
+} else {
+    room.setPatient(null);
+}
+
 		try {
 		    return modelMapper.map(roomRepository.save(room), RoomDto.class);
 		} catch(DataIntegrityViolationException e) {

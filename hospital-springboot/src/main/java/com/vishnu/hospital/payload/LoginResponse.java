@@ -2,16 +2,7 @@ package com.vishnu.hospital.payload;
 
 public class LoginResponse {
 	
-	private String type;
     private String token;
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public String getToken() {
         return token;
@@ -20,5 +11,17 @@ public class LoginResponse {
     public void setToken(String token) {
         this.token = token;
     }
+
+	public LoginResponse() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public LoginResponse(String token) {
+		super();
+		this.token = token;
+	}
+    
+    
 
 }

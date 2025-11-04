@@ -2,7 +2,6 @@ package com.vishnu.hospital.dto;
 
 public class RoomDto {
 	
-	public int id;
 	public String roomNo;
 	public String type;
 	public String status;
@@ -13,17 +12,12 @@ public class RoomDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RoomDto(int id, String roomNo, String type, String status, int patientId) {
+	public RoomDto(String roomNo, String type, String status, int patientId) {
 		super();
-		this.id = id;
 		this.roomNo = roomNo;
 		this.type = type;
 		this.status = status;
 		this.patientId = patientId;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String getRoomNo() {
@@ -40,10 +34,6 @@ public class RoomDto {
 
 	public int getPatientId() {
 		return patientId;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public void setRoomNo(String roomNo) {

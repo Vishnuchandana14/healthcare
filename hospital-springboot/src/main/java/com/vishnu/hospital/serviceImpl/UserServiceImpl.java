@@ -35,22 +35,6 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	
-
-	@Override
-	public UserDto getUserDetails() {
-		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	        User user = (User) authentication.getPrincipal();
-	        return modelMapper.map(user, UserDto.class);
-	}
-
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-		 return userRepository.findByEmailOrMobileNumber(username, username)
-		                .orElseThrow(() -> new BadCredentialsException("User not found with email or mobile: " + username));
-
-	}
 
 	@Override
 	public RegistrationResponse signup(RegistrationRequest request, Set<Role> role) {
@@ -60,9 +44,6 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 		if(userRepository.findByMobileNumber(request.getMobileNumber()).isPresent()) {
 			throw new UserAlreadyExistsException("User already exists!");
 		}
-		if(!request.getPassword().equals(request.getConfirmPassword())) {
-			throw new UserAlreadyExistsException("Password is not matching");
-		}
 		
 		User user = new User();
 		user.setUsername(request.getName());
@@ -70,7 +51,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 		user.setMobileNumber(request.getMobileNumber());
 		user.setRoles(role);
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
-		user.setConfirmPassword(passwordEncoder.encode(request.getConfirmPassword()));
+
 		
 		User savedUser = userRepository.save(user);
 		
@@ -83,10 +64,21 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 	}
 
 	@Override
-	public User getUserById(int id) {
+	public User getUserById(Long id) {
 		return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotExistsException("User not found with ID: " + id));
 
 	}
 
+	
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	    return userRepository.findByUsername(username)
+	            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+	 
+	}
+	
 }
+
+

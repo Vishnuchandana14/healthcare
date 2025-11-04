@@ -5,6 +5,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,9 @@ import com.vishnu.hospital.payload.RegistrationRequest;
 import com.vishnu.hospital.payload.RegistrationResponse;
 import com.vishnu.hospital.service.UserService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "1. Registration")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -33,10 +37,4 @@ public class UserController {
 		
 	}
 	
-	@GetMapping("/profile")
-	public ResponseEntity<UserDto> getProfileDetails(){
-		UserDto user = userService.getUserDetails();
-		return new ResponseEntity<>(user, HttpStatus.OK);
-	}
-
 }

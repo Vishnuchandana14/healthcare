@@ -12,9 +12,10 @@ import com.vishnu.hospital.payload.RegistrationResponse;
 public interface UserService {
 	
 	RegistrationResponse signup(RegistrationRequest request, Set<Role> role);
-	
-	User getUserById(int id);
 
-    UserDto getUserDetails();
+	
+	User getUserById(Long userId);
+//
+//    UserDto getUserDetails();
 
 }

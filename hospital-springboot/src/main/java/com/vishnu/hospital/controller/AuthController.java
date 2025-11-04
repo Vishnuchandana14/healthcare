@@ -12,8 +12,10 @@ import com.vishnu.hospital.payload.LoginRequest;
 import com.vishnu.hospital.payload.LoginResponse;
 import com.vishnu.hospital.service.AuthService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
+@Tag(name = "2. Login")
 @RestController
 @RequestMapping("/api/login")
 public class AuthController {

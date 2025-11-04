@@ -1,13 +1,15 @@
 package com.vishnu.hospital.dto;
 
+import java.util.Set;
+
 import com.vishnu.hospital.enums.Role;
 
 public class UserDto {
 	
-	private int id;
+	private Long id;
 	private String username;
 	private String password;
-	private Role role;
+	private Set<Role> role;
 	private String email;
 	private String mobileNumber;
 	
@@ -16,7 +18,7 @@ public class UserDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserDto(int id, String username, String password, Role role) {
+	public UserDto(Long id, String username, String password, Set<Role> role) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -24,7 +26,7 @@ public class UserDto {
 		this.role = role;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -36,11 +38,11 @@ public class UserDto {
 		return password;
 	}
 
-	public Role getRole() {
+	public Set<Role> getRole() {
 		return role;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -52,7 +54,7 @@ public class UserDto {
 		this.password = password;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(Set<Role> role) {
 		this.role = role;
 	}
 

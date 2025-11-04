@@ -8,12 +8,13 @@ import org.springframework.stereotype.Repository;
 import com.vishnu.hospital.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Long>{
 	
 	Optional<User> findByEmailOrMobileNumber(String email, String mobileNumber);
 
     Optional<User> findByEmail(String email);
 
     Optional<User> findByMobileNumber(String mobileNumber);
+    Optional<User> findByUsername(String username);
 
 }
